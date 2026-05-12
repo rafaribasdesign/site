@@ -484,7 +484,7 @@
       .hero-name { padding: 0 12px calc(56px + env(safe-area-inset-bottom, 16px)); white-space: nowrap; overflow: visible; }
       .hero-side-text { display: none; }
       .scroll-nav-btn { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
-      .hero-images { height: 200px; }
+      .hero-images { display: none; }
       #about { grid-template-columns: 1fr; }
       .about-left { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 20px; }
       .about-right { padding: 36px 20px; }
@@ -922,15 +922,12 @@
     World.add(world, mouseConstraint);
     render.mouse = mouse;
 
-    // Impede arrastar tags abaixo do topo do título
-    Events.on(mouseConstraint, 'mousemove', function () {
-      const dragged = mouseConstraint.body;
-      if (!dragged) return;
-      const halfH = (dragged.bounds.max.y - dragged.bounds.min.y) / 2;
-      const maxY  = titleTopY - halfH - 2;
-      if (dragged.position.y > maxY) {
-        Matter.Body.setPosition(dragged, { x: dragged.position.x, y: maxY });
-        Matter.Body.setVelocity(dragged, { x: dragged.velocity.x, y: 0 });
+    // Impede arrastar tags abaixo do topo do título: clampeia a posição alvo
+    // do mouse *antes* de cada step de física, para que o spring nunca puxe
+    // o body para além do título.
+    Events.on(engine, 'beforeUpdate', function () {
+      if (mouse.position.y > titleTopY - 20) {
+        mouse.position.y = titleTopY - 20;
       }
     });
 
