@@ -255,14 +255,16 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       height: clamp(380px, 42vw, 700px);
-      border-bottom: 1px solid var(--border);
+      gap: clamp(12px, 1.4vw, 20px);
+      padding: clamp(16px, 2vw, 28px) clamp(20px, 2.5vw, 32px) clamp(24px, 3vw, 40px);
     }
     .hero-img-block {
       background: var(--card-bg);
       overflow: hidden;
       position: relative;
+      border-radius: clamp(10px, 0.85vw, 14px);
+      border: 1px solid var(--border);
     }
-    .hero-img-block:first-child { border-right: 1px solid var(--border); }
     .hero-img-block img {
       width: 100%; height: 100%;
       object-fit: cover;
@@ -310,7 +312,7 @@
 
     /* ── Works ── */
     .works-label {
-      padding: 28px 32px;
+      padding: 28px clamp(20px, 2.5vw, 32px);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: baseline;
@@ -326,15 +328,17 @@
     #works {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: clamp(12px, 1.4vw, 20px);
+      padding: clamp(16px, 2vw, 28px) clamp(20px, 2.5vw, 32px) clamp(24px, 3vw, 40px);
     }
     .work-card {
-      border-bottom: 1px solid var(--border);
+      border-radius: clamp(10px, 0.85vw, 14px);
+      border: 1px solid var(--border);
       cursor: pointer;
       overflow: hidden;
       display: block;
       color: inherit;
     }
-    .work-card:nth-child(odd) { border-right: 1px solid var(--border); }
     .work-card-img {
       width: 100%;
       aspect-ratio: 4/3;
@@ -464,13 +468,24 @@
       color: #000;
     }
 
-    /* ── Reveal ── */
-    .reveal {
+    /* ── Reveal — Apple style (all viewports) ── */
+    .reveal, .m-reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(40px) scale(0.97);
+      filter: blur(8px);
+      transition:
+        opacity  0.9s cubic-bezier(.16,1,.3,1),
+        transform 0.9s cubic-bezier(.16,1,.3,1),
+        filter   0.75s cubic-bezier(.16,1,.3,1);
+      will-change: opacity, transform, filter;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.visible, .m-reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    /* Stagger grid de projetos — coluna direita ligeiramente atrasada */
+    #works .work-card:nth-child(even) { transition-delay: 0.1s; }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -485,12 +500,11 @@
       .hero-name { padding: 0 12px calc(56px + env(safe-area-inset-bottom, 16px)); white-space: nowrap; overflow: visible; }
       .hero-side-text { display: none; }
       .scroll-nav-btn { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
-      .hero-images { height: 200px; }
+      .hero-images { height: 220px; gap: 12px; padding: 16px 16px 28px; }
       #about { grid-template-columns: 1fr; }
       .about-left { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 20px; }
       .about-right { padding: 36px 20px; }
-      #works { grid-template-columns: 1fr; }
-      .work-card:nth-child(odd) { border-right: none; }
+      #works { grid-template-columns: 1fr; gap: 12px; padding: 16px 16px 28px; }
       #experience { grid-template-columns: 1fr; }
       .exp-header { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 20px 32px; }
       .contact-form { padding: 36px 20px 48px; }
@@ -498,39 +512,7 @@
 
       .theme-label { display: none; }
 
-      /* ── Mobile scroll reveal — Apple style ── */
-      .reveal {
-        transform: translateY(44px) scale(0.97);
-        filter: blur(8px);
-        transition:
-          opacity  0.9s cubic-bezier(.16,1,.3,1),
-          transform 0.9s cubic-bezier(.16,1,.3,1),
-          filter   0.75s cubic-bezier(.16,1,.3,1);
-        will-change: opacity, transform, filter;
-      }
-      .reveal.visible {
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-      }
-
-      /* Seções completas (sem .reveal no HTML) */
-      .m-reveal {
-        opacity: 0;
-        transform: translateY(44px) scale(0.97);
-        filter: blur(8px);
-        transition:
-          opacity  0.9s cubic-bezier(.16,1,.3,1),
-          transform 0.9s cubic-bezier(.16,1,.3,1),
-          filter   0.75s cubic-bezier(.16,1,.3,1);
-        will-change: opacity, transform, filter;
-      }
-      .m-reveal.visible {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-      }
-
-      /* Stagger em coluna única */
+      /* Stagger coluna única no mobile */
       .work-card:nth-child(2) { transition-delay: 0.07s; }
       .work-card:nth-child(3) { transition-delay: 0.14s; }
       .work-card:nth-child(4) { transition-delay: 0.21s; }
@@ -778,19 +760,19 @@
     window.addEventListener('scroll', updateScrollNavBtn, { passive: true });
     updateScrollNavBtn();
 
-    // ── Viewport height (iOS Safari fix) ──
-    // visualViewport.height = área visível real, excluindo toolbar do browser.
-    // Atualiza ao redimensionar (toolbar Safari aparece/some) e na rotação.
-    function setHeroHeight() {
+    // ── Viewport height (mobile fix) ──
+    // Capturado uma única vez no carregamento — evita atualizações dinâmicas que
+    // causam resize do hero e corrompem o engine de física ao toolbar aparecer/sumir.
+    (function () {
       const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
       document.documentElement.style.setProperty('--hero-h', h + 'px');
-    }
-    setHeroHeight();
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', setHeroHeight, { passive: true });
-    }
+    })();
+    // Atualiza apenas na mudança real de orientação (largura muda)
     window.addEventListener('orientationchange', function () {
-      setTimeout(setHeroHeight, 200);
+      setTimeout(function () {
+        const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        document.documentElement.style.setProperty('--hero-h', h + 'px');
+      }, 300);
     }, { passive: true });
 
     // ── Título 90% da largura ──
@@ -911,10 +893,15 @@
       });
     });
 
+    var lastResizeW = window.innerWidth;
     window.addEventListener('resize', function () {
+      var newW = window.innerWidth;
+      // Ignora resize causado por toolbar mobile (só altura muda)
+      if (Math.abs(newW - lastResizeW) < 10) return;
+      lastResizeW = newW;
       fitHeroName();
-      const nr = nameEl.getBoundingClientRect();
-      const hr = heroEl.getBoundingClientRect();
+      var nr = nameEl.getBoundingClientRect();
+      var hr = heroEl.getBoundingClientRect();
       titleTopY = nr.top - hr.top;
       Matter.Body.setPosition(namePlatform, {
         x: nr.left - hr.left + nr.width / 2,
@@ -1040,6 +1027,7 @@
     Runner.run(Runner.create(), engine);
 
     window.addEventListener('resize', function () {
+      if (Math.abs(window.innerWidth - lastResizeW) < 10) return;
       const rW = heroEl.clientWidth;
       const rH = heroEl.clientHeight;
       render.canvas.width  = rW;
@@ -1060,28 +1048,26 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
 
-    // ── Mobile: animações Apple-style por seção ──
-    if (window.matchMedia('(max-width: 768px)').matches) {
-      var mobileRevealTargets = [
-        '.hero-images',
-        '#about',
-        '.works-label',
-        '#experience'
-      ].map(function (s) { return document.querySelector(s); }).filter(Boolean);
+    // ── Animações Apple-style por seção (desktop + mobile) ──
+    var sectionRevealTargets = [
+      '.hero-images',
+      '#about',
+      '.works-label',
+      '#experience'
+    ].map(function (s) { return document.querySelector(s); }).filter(Boolean);
 
-      mobileRevealTargets.forEach(function (el) { el.classList.add('m-reveal'); });
+    sectionRevealTargets.forEach(function (el) { el.classList.add('m-reveal'); });
 
-      var mobileObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            mobileObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.06 });
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          sectionObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06 });
 
-      mobileRevealTargets.forEach(function (el) { mobileObserver.observe(el); });
-    }
+    sectionRevealTargets.forEach(function (el) { sectionObserver.observe(el); });
   </script>
 </body>
 </html>
