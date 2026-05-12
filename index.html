@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Rafael Ribas — Designer especialista em marcas que conectam. Brand identity, motion e UI/UX." />
+  <meta name="author" content="Rafael Ribas" />
+  <title>Rafael Ribas — Brand Designer</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0ede8;
+      --text: #0d0d0d;
+      --muted: #888;
+      --border: rgba(0,0,0,0.1);
+      --card-bg: #e2dfd9;
+    }
+    [data-theme="dark"] {
+      --bg: #0d0d0d;
+      --text: #f0ede8;
+      --muted: #666;
+      --border: rgba(255,255,255,0.1);
+      --card-bg: #1a1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      transition: background 0.4s, color 0.4s;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease,
+                  -webkit-backdrop-filter 0.4s ease, box-shadow 0.4s ease,
+                  border-radius 0.4s ease, top 0.4s ease,
+                  left 0.4s ease, right 0.4s ease, padding 0.4s ease;
+    }
+    nav.glass {
+      top: 12px;
+      left: 16px;
+      right: 16px;
+      border-radius: 20px;
+      padding: 14px 28px;
+      background: rgba(240, 237, 232, 0.55);
+      backdrop-filter: blur(28px) saturate(200%) brightness(1.05);
+      -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.05);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.5) inset,
+        0 2px 16px rgba(0,0,0,0.08),
+        0 1px 0 rgba(255,255,255,0.8) inset;
+    }
+    [data-theme="dark"] nav.glass {
+      background: rgba(18, 18, 18, 0.55);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.1) inset,
+        0 2px 16px rgba(0,0,0,0.4),
+        0 1px 0 rgba(255,255,255,0.07) inset;
+    }
+
+    .nav-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      font-size: clamp(17px, 0.45vw + 15px, 23px);
+    }
+    .nav-logo-copy {
+      font-size: clamp(14px, 0.34vw + 13px, 18px);
+      margin-left: 4px;
+      vertical-align: baseline;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: clamp(11px, 0.66vw + 9px, 18px);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--muted); }
+
+    .theme-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .theme-label {
+      font-size: clamp(11px, 0.28vw + 10px, 14px);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .theme-btn {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: none;
+      appearance: none;
+      box-shadow: inset 0 0 0 1.5px rgba(128,128,128,0.4);
+      background: linear-gradient(to right, #0d0d0d 50%, #f0ede8 50%);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-side-text {
+      position: absolute;
+      left: -58px;
+      top: 44%;
+      transform: translateY(-50%) rotate(-90deg);
+      font-size: clamp(10.4px, 0.22vw + 9.8px, 12.7px);
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      transform-origin: center center;
+      z-index: 20;
+    }
+
+    /* ── Scroll nav button (fixed, todas as telas) ── */
+    .scroll-nav-btn {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      margin-left: -26px;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      z-index: 150;
+      background: rgba(240, 237, 232, 0.38);
+      backdrop-filter: blur(24px) saturate(180%) brightness(1.04);
+      -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.04);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.55) inset,
+        0 2px 16px rgba(0,0,0,0.09);
+      display: flex; align-items: center; justify-content: center;
+      color: #888;
+      animation: scroll-nav-float 2.4s ease-in-out infinite;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    [data-theme="dark"] .scroll-nav-btn {
+      background: rgba(15, 15, 15, 0.38);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.1) inset,
+        0 2px 16px rgba(0,0,0,0.4);
+      color: #aaa;
+    }
+    .scroll-nav-btn.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .scroll-nav-btn svg {
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .scroll-nav-btn.up svg {
+      transform: rotate(180deg);
+    }
+    @keyframes scroll-nav-float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+
+    /* ── Physics ── */
+    #physics-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #physics-container canvas {
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 10;
+    }
+
+    .tag-element {
+      position: absolute;
+      top: 0; left: 0;
+      pointer-events: none;
+      user-select: none;
+      z-index: 15;
+      white-space: nowrap;
+    }
+
+    /* Nome gigante */
+    .hero-name {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 900;
+      font-size: 17vw;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      padding: 0 0 24px;
+      white-space: nowrap;
+      overflow: visible;
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      text-align: left;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* ── Imagens hero ── */
+    .hero-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: clamp(380px, 42vw, 700px);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-img-block {
+      background: var(--card-bg);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-img-block:first-child { border-right: 1px solid var(--border); }
+    .hero-img-block img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+    }
+    .hero-img-block:hover img { transform: scale(1.04); }
+
+    /* ── About ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-left {
+      padding: 72px 48px 72px 32px;
+      border-right: 1px solid var(--border);
+    }
+    .about-label {
+      font-size: clamp(10px, 0.19vw + 9.3px, 12px);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .about-left h2 {
+      font-size: clamp(1.25rem, 0.47vw + 1.1rem, 2.2rem);
+      font-weight: 300;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+    .about-right {
+      padding: 72px 32px 72px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .about-right p {
+      font-size: clamp(1.06rem, 0.4vw + 0.94rem, 1.87rem);
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      max-width: 380px;
+    }
+
+    /* ── Works ── */
+    .works-label {
+      padding: 28px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .works-label span {
+      font-size: clamp(14px, 0.27vw + 13px, 16.8px);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .works-label .years { color: var(--muted); }
+
+    #works {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .work-card {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      overflow: hidden;
+      display: block;
+      color: inherit;
+    }
+    .work-card:nth-child(odd) { border-right: 1px solid var(--border); }
+    .work-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--card-bg);
+      overflow: hidden;
+      position: relative;
+    }
+    .work-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+    }
+    .work-card:hover .work-card-img img { transform: scale(1.05); }
+    .work-card-info {
+      padding: 20px 24px 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+    .work-name { font-size: clamp(14.3px, 0.31vw + 13.2px, 18.7px); font-weight: 400; margin-bottom: 4px; text-transform: uppercase; }
+    .work-type { font-size: clamp(12.65px, 0.22vw + 11.5px, 14.95px); color: var(--muted); }
+    .work-year { font-size: clamp(12.1px, 0.21vw + 11px, 14.3px); color: var(--muted); }
+
+    /* ── Contact ── */
+    #experience {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-header {
+      padding: 64px 48px 64px 32px;
+      border-right: 1px solid var(--border);
+    }
+    .contact-title {
+      font-size: clamp(1.4rem, 0.56vw + 1.1rem, 2.4rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .contact-subtitle {
+      font-size: clamp(1.19rem, 0.47vw + 0.94rem, 2.04rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #aaa;
+      margin-top: 4px;
+    }
+    .contact-form {
+      padding: 64px 32px 64px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .contact-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .contact-field label {
+      font-size: clamp(10px, 0.19vw + 9.3px, 12px);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .contact-field input,
+    .contact-field textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      font-size: clamp(13px, 0.28vw + 12px, 17px);
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      resize: none;
+      transition: border-color 0.2s;
+    }
+    .contact-field input:focus,
+    .contact-field textarea:focus {
+      border-color: var(--text);
+    }
+    .contact-submit {
+      align-self: flex-start;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 14px 36px;
+      font-size: clamp(11px, 0.19vw + 10px, 13px);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 100px;
+      transition: opacity 0.2s;
+    }
+    .contact-submit:hover { opacity: 0.8; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 36px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy { font-size: clamp(11px, 0.19vw + 10px, 13px); color: var(--muted); }
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a {
+      font-size: clamp(11px, 0.19vw + 10px, 13px);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Circle tags (seta e asterisco) ── */
+    .circle-tag {
+      background: #000;
+      color: #fff;
+    }
+    [data-theme="dark"] .circle-tag {
+      background: #efefef;
+      color: #000;
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 14px; }
+      #hero {
+        height: var(--hero-h, 100svh);
+        min-height: unset;
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .hero-name { padding: 0 12px calc(56px + env(safe-area-inset-bottom, 16px)); white-space: nowrap; overflow: visible; }
+      .hero-side-text { display: none; }
+      .scroll-nav-btn { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+      .hero-images { height: 200px; }
+      #about { grid-template-columns: 1fr; }
+      .about-left { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 20px; }
+      .about-right { padding: 36px 20px; }
+      #works { grid-template-columns: 1fr; }
+      .work-card:nth-child(odd) { border-right: none; }
+      #experience { grid-template-columns: 1fr; }
+      .exp-header { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 20px 32px; }
+      .contact-form { padding: 36px 20px 48px; }
+      footer { flex-direction: column; gap: 16px; padding: 28px 20px; }
+
+      .theme-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <span class="nav-logo">rafaribas<span class="nav-logo-copy">©</span></span>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#experience">Contact</a></li>
+    </ul>
+    <div class="theme-wrapper">
+      <span class="theme-label" id="themeLabel"></span>
+      <button class="theme-btn" id="themeBtn" title="Alternar tema" aria-label="Alternar tema"></button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <span class="hero-side-text">Criando [e deixando] marcas</span>
+
+    <!-- Physics container — canvas e tags criados via JS -->
+    <div id="physics-container"></div>
+
+    <div class="hero-name" id="hero-name">rafaribas</div>
+  </section>
+
+  <!-- Imagens em destaque -->
+  <div class="hero-images">
+    <div class="hero-img-block">
+      <img src="images/rafael-photo.jpg" alt="Rafael Ribas">
+    </div>
+    <div class="hero-img-block">
+      <video src="images/video-hero.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="about-left reveal">
+      <p class="about-label">Sobre mim</p>
+      <h2>Oi, eu me chamo Rafael Ribas,<br />sou designer especialista<br />em marcas que conectam.</h2>
+    </div>
+    <div class="about-right reveal">
+      <p>
+        Hi, my name is Rafael Ribas,<br />I'm a designer specialized<br />in brands that connect.
+      </p>
+    </div>
+  </section>
+
+  <!-- Works label -->
+  <div class="works-label">
+    <span>Projetos selecionados</span>
+    <span class="years">2023 — 2025</span>
+  </div>
+
+  <!-- Works grid -->
+  <div id="works">
+
+    <a class="work-card reveal" href="project-selfdecor.html">
+      <div class="work-card-img">
+        <img src="images/project1.jpg" alt="SELFDECOR">
+      </div>
+      <div class="work-card-info">
+        <div>
+          <p class="work-name">SELFDECOR</p>
+          <p class="work-type">Embalagem · 3D · Identidade Visual</p>
+        </div>
+        <span class="work-year">2025</span>
+      </div>
+    </a>
+
+    <a class="work-card reveal" href="project-byeveli.html">
+      <div class="work-card-img">
+        <img src="images/project4.jpg" alt="Byeveli">
+      </div>
+      <div class="work-card-info">
+        <div>
+          <p class="work-name">Byeveli</p>
+          <p class="work-type">Identidade Visual</p>
+        </div>
+        <span class="work-year">2024</span>
+      </div>
+    </a>
+
+    <a class="work-card reveal" href="project-madame-a.html">
+      <div class="work-card-img">
+        <img src="images/project3.jpg" alt="Madame A">
+      </div>
+      <div class="work-card-info">
+        <div>
+          <p class="work-name">Madame A</p>
+          <p class="work-type">E-commerce</p>
+        </div>
+        <span class="work-year">2025</span>
+      </div>
+    </a>
+
+    <a class="work-card reveal" href="project-rte.html">
+      <div class="work-card-img">
+        <img src="images/project2.jpg" alt="RTE Engenharia">
+      </div>
+      <div class="work-card-info">
+        <div>
+          <p class="work-name">RTE Engenharia</p>
+          <p class="work-type">Identidade Visual</p>
+        </div>
+        <span class="work-year">2025</span>
+      </div>
+    </a>
+
+    <a class="work-card reveal" href="project-binet.html">
+      <div class="work-card-img">
+        <img src="images/project5.jpg" alt="Binet">
+      </div>
+      <div class="work-card-info">
+        <div>
+          <p class="work-name">Binet</p>
+          <p class="work-type">Identidade Visual</p>
+        </div>
+        <span class="work-year">2024</span>
+      </div>
+    </a>
+
+    <a class="work-card reveal" href="project-bear.html">
+      <div class="work-card-img">
+        <img src="images/CP_04.jpg" alt="BEAR">
+      </div>
+      <div class="work-card-info">
+        <div>
+          <p class="work-name">BEAR</p>
+          <p class="work-type">Embalagem · 3D · Identidade Visual</p>
+        </div>
+        <span class="work-year">2024</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Contact -->
+  <section id="experience">
+    <div class="exp-header">
+      <h2 class="contact-title">Vamos trabalhar juntos?</h2>
+      <p class="contact-subtitle">Shall we work together?</p>
+    </div>
+    <form class="contact-form reveal" id="contactForm">
+      <div class="contact-field">
+        <label for="contactName">NOME / NAME</label>
+        <input type="text" id="contactName" name="name" required autocomplete="name" />
+      </div>
+      <div class="contact-field">
+        <label for="contactEmail">E-MAIL</label>
+        <input type="email" id="contactEmail" name="email" required autocomplete="email" />
+      </div>
+      <div class="contact-field">
+        <label for="contactMessage">MENSAGEM / MESSAGE</label>
+        <textarea id="contactMessage" name="message" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="contact-submit">ENVIAR / SUBMIT</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-copy">© 2025 Rafael Ribas</span>
+    <ul class="footer-links">
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+      <li><a href="https://linkedin.com/in/" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:rafaribasbahia@gmail.com">Email</a></li>
+    </ul>
+  </footer>
+
+  <!-- Botão de navegação flutuante -->
+  <button id="scrollNavBtn" class="scroll-nav-btn" aria-label="Próxima seção">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <polyline points="19 12 12 19 5 12"/>
+    </svg>
+  </button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script>
+    // ── Theme toggle ──
+    const btn = document.getElementById('themeBtn');
+    const themeLabel = document.getElementById('themeLabel');
+    const themeWrapper = btn.closest('.theme-wrapper');
+    const htmlEl = document.documentElement;
+    const saved = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', saved);
+    themeLabel.textContent = saved === 'light' ? 'DARK' : 'LIGHT';
+    themeLabel.style.color = saved === 'light' ? '#0d0d0d' : '#f0ede8';
+
+    let btnRotation = 0;
+    function toggleTheme() {
+      const next = htmlEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeLabel.textContent = next === 'light' ? 'DARK' : 'LIGHT';
+      themeLabel.style.color = next === 'light' ? '#0d0d0d' : '#f0ede8';
+      btnRotation += 180;
+      btn.style.transform = `rotate(${btnRotation}deg)`;
+    }
+
+    themeWrapper.addEventListener('click', toggleTheme);
+
+    // ── Botão de navegação progressiva ──
+    const scrollNavBtn = document.getElementById('scrollNavBtn');
+    const scrollTargets = [
+      document.querySelector('.hero-images'),
+      document.querySelector('.works-label'),
+      document.getElementById('experience')
+    ].filter(Boolean);
+
+    function getNextScrollTarget() {
+      for (const target of scrollTargets) {
+        if (target.getBoundingClientRect().top > window.innerHeight * 0.25) {
+          return target;
+        }
+      }
+      return null;
+    }
+
+    function updateScrollNavBtn() {
+      const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
+      scrollNavBtn.classList.remove('hidden');
+      scrollNavBtn.classList.toggle('up', atBottom);
+    }
+
+    scrollNavBtn.addEventListener('click', function () {
+      if (scrollNavBtn.classList.contains('up')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const next = getNextScrollTarget();
+        if (next) next.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    window.addEventListener('scroll', updateScrollNavBtn, { passive: true });
+    updateScrollNavBtn();
+
+    // ── Viewport height (iOS Safari fix — orientationchange only, not resize) ──
+    function setHeroHeight() {
+      document.documentElement.style.setProperty('--hero-h', window.innerHeight + 'px');
+    }
+    setHeroHeight();
+    window.addEventListener('orientationchange', function () {
+      setTimeout(setHeroHeight, 200);
+    }, { passive: true });
+
+    // ── Título 90% da largura ──
+    const heroNameEl = document.getElementById('hero-name');
+    function fitHeroName() {
+      const probe = document.createElement('span');
+      probe.textContent = heroNameEl.textContent;
+      probe.style.cssText = [
+        'position:absolute', 'visibility:hidden', 'pointer-events:none',
+        'white-space:nowrap', 'font-size:100px',
+        'font-family:"DM Sans",sans-serif', 'font-weight:900',
+        'letter-spacing:-0.02em', 'top:-9999px', 'left:-9999px'
+      ].join(';');
+      document.body.appendChild(probe);
+      const textWidth = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      heroNameEl.style.fontSize = ((window.innerWidth * 0.9) / textWidth * 100) + 'px';
+    }
+
+    fitHeroName();
+
+    // ── Nav liquid glass ao rolar ──
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', function () {
+      navEl.classList.toggle('glass', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Physics ──
+    const { Engine, Render, Runner, World, Bodies, Mouse, MouseConstraint, Events } = Matter;
+
+    const elementsData = [
+      {
+        type: 'pill',
+        html: '<div style="background:#fee8a6;border:1px solid #8f8f8f;border-radius:13px;padding:10px 19px;"><p style="font-family:\'Space Mono\',monospace;font-size:17px;color:#000;margin:0;">DESIGN</p></div>'
+      },
+      {
+        type: 'pill',
+        html: '<div style="background:#a3ef7b;border:1px solid #8f8f8f;border-radius:13px;padding:10px 19px;"><p style="font-family:\'Space Mono\',monospace;font-size:17px;color:#000;margin:0;">BRAND</p></div>'
+      },
+      {
+        type: 'pill',
+        html: '<div style="background:#fee8a6;border:1px solid #8f8f8f;border-radius:13px;padding:10px 19px;"><p style="font-family:\'Space Mono\',monospace;font-size:17px;color:#000;margin:0;">SOUL</p></div>'
+      },
+      {
+        type: 'pill',
+        html: '<div style="background:#a3ef7b;border:1px solid #8f8f8f;border-radius:13px;padding:10px 19px;"><p style="font-family:\'Space Mono\',monospace;font-size:17px;color:#000;margin:0;">WEBSITES</p></div>'
+      },
+      {
+        type: 'pill',
+        html: '<div style="background:#fee8a6;border:1px solid #8f8f8f;border-radius:13px;padding:10px 19px;"><p style="font-family:\'Space Mono\',monospace;font-size:17px;color:#000;margin:0;">FUNCTION</p></div>'
+      },
+      {
+        type: 'pill',
+        html: '<div style="background:#a3ef7b;border:1px solid #8f8f8f;border-radius:13px;padding:10px 19px;"><p style="font-family:\'Space Mono\',monospace;font-size:17px;color:#000;margin:0;">LABELS</p></div>'
+      },
+      {
+        type: 'circle',
+        size: 102,
+        html: '<div class="circle-tag" style="border-radius:51px;width:102px;height:102px;display:flex;align-items:center;justify-content:center;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>'
+      },
+      {
+        type: 'circle',
+        size: 102,
+        html: '<div class="circle-tag" style="border-radius:51px;width:102px;height:102px;display:flex;align-items:center;justify-content:center;"><span style="font-family:\'Space Mono\',monospace;font-size:48px;line-height:1;">*</span></div>'
+      }
+    ];
+
+    const container = document.getElementById('physics-container');
+    const heroEl    = document.getElementById('hero');
+    const W = heroEl.clientWidth;
+    const H = heroEl.clientHeight;
+
+    const engine = Engine.create({ gravity: { y: 0.7 } });
+    const world  = engine.world;
+
+    const render = Render.create({
+      element: container,
+      engine: engine,
+      options: {
+        width: W,
+        height: H,
+        background: 'transparent',
+        wireframes: false
+      }
+    });
+
+    const wallOpts = { isStatic: true, render: { visible: false } };
+    const physFloor   = Bodies.rectangle(W / 2,  H + 50,   W * 2, 100,   wallOpts);
+    const physCeiling = Bodies.rectangle(W / 2, -1200,    W * 2, 100,   wallOpts);
+    const physWallL   = Bodies.rectangle(-50,    H / 2,   100,   H * 6, wallOpts);
+    const physWallR   = Bodies.rectangle(W + 50, H / 2,   100,   H * 6, wallOpts);
+    World.add(world, [physFloor, physCeiling, physWallL, physWallR]);
+
+    // Plataforma baseada no nome
+    const nameEl   = document.getElementById('hero-name');
+    const nameRect = nameEl.getBoundingClientRect();
+    const heroRect = heroEl.getBoundingClientRect();
+    const namePlatform = Bodies.rectangle(
+      nameRect.left - heroRect.left + nameRect.width / 2,
+      nameRect.top  - heroRect.top  + nameRect.height / 2,
+      nameRect.width + 40,
+      nameRect.height,
+      { isStatic: true, render: { visible: false } }
+    );
+    World.add(world, namePlatform);
+
+    // Após fontes carregarem: recalcula título e reposiciona plataforma
+    document.fonts.ready.then(function () {
+      fitHeroName();
+      const nr = nameEl.getBoundingClientRect();
+      const hr = heroEl.getBoundingClientRect();
+      Matter.Body.setPosition(namePlatform, {
+        x: nr.left - hr.left + nr.width / 2,
+        y: nr.top  - hr.top  + nr.height / 2
+      });
+    });
+
+    window.addEventListener('resize', function () {
+      fitHeroName();
+      const nr = nameEl.getBoundingClientRect();
+      const hr = heroEl.getBoundingClientRect();
+      Matter.Body.setPosition(namePlatform, {
+        x: nr.left - hr.left + nr.width / 2,
+        y: nr.top  - hr.top  + nr.height / 2
+      });
+    }, { passive: true });
+
+    // Criar tags e corpos físicos
+    const domBodiesMap = [];
+
+    elementsData.forEach(function (data, index) {
+      const el = document.createElement('div');
+      el.classList.add('tag-element');
+      el.innerHTML = data.html;
+      container.appendChild(el);
+
+      const rect   = el.getBoundingClientRect();
+      const elW    = rect.width  || (data.size || 120);
+      const elH    = rect.height || (data.size || 40);
+      const startX = (W / 2) + (Math.random() * 400 - 200);
+      const startY = -100 - index * 80;
+
+      const physOpts = {
+        restitution: 0.6,
+        friction: 0.1,
+        density: Math.random() * 0.01 + 0.05,
+        render: { visible: false }
+      };
+
+      let body;
+      if (data.type === 'circle') {
+        body = Bodies.circle(startX, startY, elW / 2, physOpts);
+      } else {
+        physOpts.chamfer = { radius: elH / 2 };
+        body = Bodies.rectangle(startX, startY, elW, elH, physOpts);
+      }
+
+      World.add(world, body);
+      domBodiesMap.push({ domElement: el, body: body });
+    });
+
+    // Interação mouse / touch
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const mouse = Mouse.create(render.canvas);
+    mouse.pixelRatio = window.devicePixelRatio || 1;
+
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: { stiffness: 0.2, render: { visible: false } }
+    });
+    World.add(world, mouseConstraint);
+    render.mouse = mouse;
+
+    if (!isTouchDevice) {
+      render.canvas.removeEventListener('mousewheel', mouse.mousewheel);
+      render.canvas.removeEventListener('DOMMouseScroll', mouse.mousewheel);
+    } else {
+      render.canvas.removeEventListener('touchmove', mouse.mousemove);
+      let touchStartY = 0;
+      render.canvas.addEventListener('touchstart', function (e) {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      render.canvas.addEventListener('touchmove', function (e) {
+        const touch = e.touches[0];
+        if (mouseConstraint.body) {
+          mouse.mousemove(e);
+          e.preventDefault();
+        } else {
+          window.scrollBy(0, touchStartY - touch.clientY);
+          touchStartY = touch.clientY;
+        }
+      }, { passive: false });
+    }
+
+    // Sincronizar DOM com física
+    Events.on(engine, 'afterUpdate', function () {
+      domBodiesMap.forEach(function (pair) {
+        const x = pair.body.position.x - pair.domElement.offsetWidth  / 2;
+        const y = pair.body.position.y - pair.domElement.offsetHeight / 2;
+        pair.domElement.style.transform = 'translate(' + x + 'px, ' + y + 'px) rotate(' + pair.body.angle + 'rad)';
+      });
+    });
+
+    // Garante que o canvas permaneça transparente a cada frame
+    Events.on(render, 'beforeRender', function () {
+      render.context.clearRect(0, 0, render.canvas.width, render.canvas.height);
+    });
+
+    Render.run(render);
+    Runner.run(Runner.create(), engine);
+
+    window.addEventListener('resize', function () {
+      const rW = heroEl.clientWidth;
+      const rH = heroEl.clientHeight;
+      render.canvas.width  = rW;
+      render.canvas.height = rH;
+      Matter.Body.setPosition(physFloor,   { x: rW / 2,  y: rH + 50 });
+      Matter.Body.setPosition(physCeiling, { x: rW / 2,  y: -1200 });
+      Matter.Body.setPosition(physWallL,   { x: -50,      y: rH / 2 });
+      Matter.Body.setPosition(physWallR,   { x: rW + 50,  y: rH / 2 });
+    });
+
+    // ── Scroll reveal ──
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e, i) {
+        if (e.isIntersecting) {
+          setTimeout(function () { e.target.classList.add('visible'); }, i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+  </script>
+</body>
+</html>

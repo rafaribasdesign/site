@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BEAR — Rafael Ribas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0ede8;
+      --text: #0d0d0d;
+      --muted: #888;
+      --border: rgba(0,0,0,0.1);
+      --card-bg: #e2dfd9;
+    }
+    [data-theme="dark"] {
+      --bg: #0d0d0d;
+      --text: #f0ede8;
+      --muted: #666;
+      --border: rgba(255,255,255,0.1);
+      --card-bg: #1a1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(240, 237, 232, 0.95);
+      backdrop-filter: blur(8px);
+    }
+    [data-theme="dark"] nav {
+      background: rgba(13, 13, 13, 0.95);
+    }
+
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .theme-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--text);
+      cursor: pointer;
+      transition: background 0.3s;
+      position: relative;
+    }
+    .theme-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    main { padding-top: 80px; }
+
+    .project-hero {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      margin-bottom: 60px;
+    }
+
+    .project-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+
+    .project-header {
+      margin-bottom: 48px;
+    }
+
+    .project-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .project-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .project-content {
+      margin-top: 60px;
+    }
+
+    .content-section {
+      margin-bottom: 56px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 15px;
+      max-width: 700px;
+    }
+
+    .section-text p {
+      margin-bottom: 12px;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tech-tag {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 12px;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tech-tag:hover { border-color: var(--text); color: var(--text); }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 80px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 18px; }
+      .project-hero { height: 300px; margin-bottom: 40px; }
+      .project-container { padding: 0 20px 60px; }
+      .project-title { font-size: 1.8rem; }
+      .project-meta { gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">RAFAEL©</a>
+    <ul class="nav-links">
+      <li><a href="index.html#hero">Home</a></li>
+      <li><a href="index.html#works">Works</a></li>
+      <li><a href="index.html#experience">Archive</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn"></button>
+  </nav>
+
+  <main>
+    <img src="images/project6.png" alt="BEAR" class="project-hero">
+
+    <div class="project-container">
+      <div class="project-header">
+        <p class="project-label">Projeto</p>
+        <h1 class="project-title">BEAR</h1>
+        <div class="project-meta">
+          <div class="meta-item">
+            <span class="meta-label">Tipo</span>
+            <span class="meta-value">Embalagem · 3D · Identidade Visual</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Ano</span>
+            <span class="meta-value">2024</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Status</span>
+            <span class="meta-value">Finalizado</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-content">
+        <div class="content-section reveal">
+          <h2 class="section-title">Sobre o Projeto</h2>
+          <div class="section-text">
+            <p>
+              BEAR é um projeto integrado de branding, design de embalagem e modelagem 3D para um brand de outdoor e lifestyle.
+              O projeto foi desenvolvido com foco em criar uma identidade visual forte e versátil para aplicação em múltiplos produtos.
+            </p>
+            <p>
+              A abordagem integrou design físico (embalagem) com representação digital 3D, permitindo visualização e comunicação
+              eficaz do conceito antes da produção final.
+            </p>
+          </div>
+        </div>
+
+        <div class="content-section reveal">
+          <h2 class="section-title">Desafio</h2>
+          <div class="section-text">
+            <p>
+              Desenvolver uma identidade que transmitisse força, confiabilidade e conexão com a natureza, funcionando tanto em
+              embalagens físicas quanto em representações digitais 3D, com presença visual impactante em qualquer escala.
+            </p>
+          </div>
+        </div>
+
+        <div class="content-section reveal">
+          <h2 class="section-title">Solução</h2>
+          <div class="section-text">
+            <p>
+              Criamos um sistema visual baseado em elementos naturais estilizados, com tipografia robusta e paleta de cores que
+              refletem o tema outdoor. Desenvolvemos extensivos designs de embalagem que funcionam tanto em formato 2D quanto em
+              representações 3D realistas. Cada elemento foi pensado para manter coesão visual em diferentes mídias e tamanhos.
+            </p>
+          </div>
+        </div>
+
+        <div class="content-section reveal">
+          <h2 class="section-title">Tecnologias & Ferramentas</h2>
+          <div class="tech-list">
+            <span class="tech-tag">3D Rendering</span>
+            <span class="tech-tag">Adobe Suite</span>
+            <span class="tech-tag">Blender</span>
+            <span class="tech-tag">Packaging Design</span>
+            <span class="tech-tag">Brand Identity</span>
+          </div>
+        </div>
+
+        <a href="index.html#works" class="back-link">← Voltar aos projetos</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', saved);
+
+    btn.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
