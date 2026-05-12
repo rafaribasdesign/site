@@ -851,11 +851,14 @@
     );
     World.add(world, namePlatform);
 
+    let titleTopY = nameRect.top - heroRect.top;
+
     // Após fontes carregarem: recalcula título e reposiciona plataforma
     document.fonts.ready.then(function () {
       fitHeroName();
       const nr = nameEl.getBoundingClientRect();
       const hr = heroEl.getBoundingClientRect();
+      titleTopY = nr.top - hr.top;
       Matter.Body.setPosition(namePlatform, {
         x: nr.left - hr.left + nr.width / 2,
         y: nr.top  - hr.top  + nr.height / 2
@@ -866,6 +869,7 @@
       fitHeroName();
       const nr = nameEl.getBoundingClientRect();
       const hr = heroEl.getBoundingClientRect();
+      titleTopY = nr.top - hr.top;
       Matter.Body.setPosition(namePlatform, {
         x: nr.left - hr.left + nr.width / 2,
         y: nr.top  - hr.top  + nr.height / 2
@@ -909,7 +913,7 @@
     // Interação mouse / touch
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const mouse = Mouse.create(render.canvas);
-    mouse.pixelRatio = window.devicePixelRatio || 1;
+    mouse.pixelRatio = 1;
 
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
@@ -917,6 +921,18 @@
     });
     World.add(world, mouseConstraint);
     render.mouse = mouse;
+
+    // Impede arrastar tags abaixo do topo do título
+    Events.on(mouseConstraint, 'mousemove', function () {
+      const dragged = mouseConstraint.body;
+      if (!dragged) return;
+      const halfH = (dragged.bounds.max.y - dragged.bounds.min.y) / 2;
+      const maxY  = titleTopY - halfH - 2;
+      if (dragged.position.y > maxY) {
+        Matter.Body.setPosition(dragged, { x: dragged.position.x, y: maxY });
+        Matter.Body.setVelocity(dragged, { x: dragged.velocity.x, y: 0 });
+      }
+    });
 
     if (!isTouchDevice) {
       render.canvas.removeEventListener('mousewheel', mouse.mousewheel);
