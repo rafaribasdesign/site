@@ -478,7 +478,7 @@
       .nav-links { gap: 14px; }
       #hero {
         height: 100svh;
-        height: 100dvh;
+        height: var(--hero-h, 100dvh);
         min-height: unset;
         padding-bottom: env(safe-area-inset-bottom, 0px);
       }
@@ -739,11 +739,17 @@
     window.addEventListener('scroll', updateScrollNavBtn, { passive: true });
     updateScrollNavBtn();
 
-    // ── Viewport height (iOS Safari fix — orientationchange only, not resize) ──
+    // ── Viewport height (iOS Safari fix) ──
+    // visualViewport.height = área visível real, excluindo toolbar do browser.
+    // Atualiza ao redimensionar (toolbar Safari aparece/some) e na rotação.
     function setHeroHeight() {
-      document.documentElement.style.setProperty('--hero-h', window.innerHeight + 'px');
+      const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      document.documentElement.style.setProperty('--hero-h', h + 'px');
     }
     setHeroHeight();
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', setHeroHeight, { passive: true });
+    }
     window.addEventListener('orientationchange', function () {
       setTimeout(setHeroHeight, 200);
     }, { passive: true });
