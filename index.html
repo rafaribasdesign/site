@@ -922,21 +922,45 @@
       render.canvas.removeEventListener('mousewheel', mouse.mousewheel);
       render.canvas.removeEventListener('DOMMouseScroll', mouse.mousewheel);
     } else {
-      render.canvas.removeEventListener('touchmove', mouse.mousemove);
-      let touchStartY = 0;
+      // Remove todos os listeners de touch do Matter.js
+      render.canvas.removeEventListener('touchstart', mouse.mousedown);
+      render.canvas.removeEventListener('touchmove',  mouse.mousemove);
+      render.canvas.removeEventListener('touchend',   mouse.mouseup);
+
+      let touchDragging = false;
+      const movableBodies = function () {
+        return Matter.Composite.allBodies(world).filter(function (b) { return !b.isStatic; });
+      };
+
       render.canvas.addEventListener('touchstart', function (e) {
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-      render.canvas.addEventListener('touchmove', function (e) {
         const touch = e.touches[0];
-        if (mouseConstraint.body) {
-          mouse.mousemove(e);
-          e.preventDefault();
-        } else {
-          window.scrollBy(0, touchStartY - touch.clientY);
-          touchStartY = touch.clientY;
+        const rect  = render.canvas.getBoundingClientRect();
+        // Converte coordenadas do toque para o espaço físico
+        const px = (touch.clientX - rect.left) / rect.width  * render.canvas.width;
+        const py = (touch.clientY - rect.top)  / rect.height * render.canvas.height;
+        const hit = Matter.Query.point(movableBodies(), { x: px, y: py });
+
+        touchDragging = hit.length > 0;
+        if (touchDragging) {
+          mouse.mousedown(e);
+          e.preventDefault(); // só previne scroll quando tocou numa tag
         }
       }, { passive: false });
+
+      render.canvas.addEventListener('touchmove', function (e) {
+        if (touchDragging) {
+          mouse.mousemove(e);
+          e.preventDefault();
+        }
+        // sem touchDragging → scroll nativo do browser (rápido e fluído)
+      }, { passive: false });
+
+      render.canvas.addEventListener('touchend', function (e) {
+        if (touchDragging) {
+          mouse.mouseup(e);
+          touchDragging = false;
+        }
+      }, { passive: true });
     }
 
     // Sincronizar DOM com física
